@@ -14,7 +14,6 @@ const markupGallery = galleryItems.map(({ preview, original, description }) => {
   <img
     class="gallery__image"
     src="${preview}"
-    data-source="${original}"
     alt="${description}"
   /></a></li>`
 }).join('');
@@ -28,13 +27,17 @@ function onModal(evt) {
 
     const currentImage = evt.target;
 
-    if (currentImage.nodeName !== 'IMG') {
+    if (currentImage.className !== 'gallery__image') {
         return;
     }
-    let instance = basicLightbox.create(`<img class="gallery__image"
-    src="${currentImage.dataset.source}"/>`)
+    let lightbox = new SimpleLightbox(`.gallery .gallery__link`, {
+        captionsData: "alt",
+        cationDelay: '250',
+    });
+    // let instance = basicLightbox.create(`<img class="gallery__image"
+    // src="${currentImage.dataset.source}"/>`)
 
-    instance.show();
+    lightbox.open();
 
     // console.dir(currentImage.nodeName);
 }
